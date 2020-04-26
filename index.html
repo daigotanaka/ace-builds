@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height" />
+    <title>Ace Kitchen Sink</title>
+    <meta name="author" content="Fabian Jakobs">
+    <!--
+    Ace
+      version 1.4.10
+      commit  
+    -->
+
+    <link rel="stylesheet" href="demo/kitchen-sink/styles.css" type="text/css" media="screen" charset="utf-8">
+    
+    <script async="true" src="https://use.edgefonts.net/source-code-pro.js"></script>
+    <script src="https://markdown-it.github.io/markdown-it.js"></script>
+
+    <link href="./doc/site/images/favicon.ico" rel="icon" type="image/x-icon">
+</head>
+<body>
+  <div id="ace-wrapper">
+    <div id="sidePanel" style="position:absolute;height:100%;">
+      <div id="file">
+        <button id="load-buffer">Read from buffer</button>
+        <input type="file" id="file-input"/><br/>
+        <a id="save-link" href="" style="color: white">Export</a>
+      </div>
+
+      <div class="toggleButton" id="optionToggle" role="button" aria-label="Hide Options" tabindex="0">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <div style="position: absolute; overflow: hidden; top:100px; bottom:0">
+      <div id="optionsPanel" style="width: 120%; height:100%; overflow-y: scroll">
+      
+      </div>
+      </div>
+    </div>
+
+      <div id="editor-container" contenteditable="true"></div>
+      <div id="preview" class="preview"></div>
+  </div>
+
+
+  <div id="file-content" style="display: none;"></div>
+
+  <script src="src/ace.js" data-ace-base="src" type="text/javascript" charset="utf-8"></script>
+  <script src="src/keybinding-vim.js"></script>
+  <script src="src/keybinding-emacs.js"></script>
+  <script src="demo/kitchen-sink/demo.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    require("kitchen-sink/demo");
+  </script>
+  <script src="http://danml.com/js/download.js"></script>
+  <script src="demo/handler.js"></script>
+    
+</body>
+</html>

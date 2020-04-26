@@ -4062,7 +4062,7 @@ var optionGroups = {
             path: "keyboardHandler",
             items: [
                 { caption : "Ace", value : null },
-                { caption : "Vim", value : "ace/keyboard/vim" },
+                { caption : "Vim", value : "ace/keyboard/vim"},
                 { caption : "Emacs", value : "ace/keyboard/emacs" },
                 { caption : "Sublime", value : "ace/keyboard/sublime" },
                 { caption : "VSCode", value : "ace/keyboard/vscode" }
@@ -4071,7 +4071,7 @@ var optionGroups = {
         "Font Size": {
             path: "fontSize",
             type: "number",
-            defaultValue: 12,
+            defaultValue: 16,
             defaults: [
                 {caption: "12px", value: 12},
                 {caption: "24px", value: 24}
@@ -7457,7 +7457,18 @@ function onResize(e, closeSidePanel) {
     } else
         document.getElementById("optionToggle").setAttribute("aria-label", "Hide Options");
     width -= left;
-    container.style.width = width + "px";
+
+    // Daigo
+    var preview = document.getElementById("preview");
+    preview.style.padding = "10px";
+    preview.style.position = "absolute";
+    preview.style.width = width * 0.5 - 20 + "px";
+    preview.style.height = height - consoleHeight + "px";
+    preview.style.left = (left + width * 0.5) + "px";
+    preview.style.overflow = "scroll";
+
+    // Daigo add 0.5
+    container.style.width = width * 0.5 + "px";
     container.style.height = height - consoleHeight + "px";
     container.style.left = left + "px";
     env.split.resize();
