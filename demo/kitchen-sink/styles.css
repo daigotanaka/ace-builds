@@ -33,6 +33,7 @@ body {
 #file {
     margin: 10px;
 }
+
 #preview {
     position: absolute;
     top:  0px;
@@ -41,10 +42,13 @@ body {
     right: 0px;
     background: white;
     color: black;
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-size: 21px;
+    line-height: 150%;
 }
 
 #preview img {
-  max-width: 100%;
+  max-width: 90%;
 }
 
 #controls {

@@ -20,6 +20,8 @@ function updateBuffer() {
   if (files.length > 0) {
     filename = files[0].name;
     localStorage.setItem("filename", filename);
+  } else {
+    filename = localStorage.getItem("filename");
   }
   
   // Update download link
@@ -55,9 +57,9 @@ function readFromFile(e) {
 function loadFromBuffer() {
   var text = localStorage.getItem("buffer");
   updateEditor(text);
+  isSafeToUpdateBuffer = true;
   updatePreview();
   updateBuffer();
-  isSafeToUpdateBuffer = true;
 }
 
 document.getElementById('file-input')
