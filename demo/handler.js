@@ -1,56 +1,70 @@
-var md = window.markdownit();
+// It's safe to update the buffer only when buffer or file is loaded 
+// at least once in this session.
+isSafeToUpdateBuffer = false;
 
-function readSingleFile(e) {
+function updatePreview() {
+  var md = window.markdownit();
+  var text = env.editor.getValue();
+  var html = md.render(text);
+  document.getElementById("preview").innerHTML = html;
+}
+
+function updateBuffer() {
+  if (!isSafeToUpdateBuffer) return;
+
+  var text = env.editor.getValue();
+  localStorage.setItem("buffer", text);
+
+  var files = document.getElementById("file-input").files
+  var filename = null;
+  if (files.length > 0) {
+    filename = files[0].name;
+    localStorage.setItem("filename", filename);
+  }
+  
+  // Update download link
+  var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+  var link = window.URL.createObjectURL(blob);
+  var a = document.getElementById("save-link");
+  a.href = link;
+  a.download = filename;
+}
+
+function updateEditor(text) {
+  if (text === null) return;
+  env.editor.setValue(text);
+}
+
+function readFromFile(e) {
   var file = e.target.files[0];
   if (!file) {
     return;
   }
+
   var reader = new FileReader();
   reader.onload = function(e) {
-    var contents = e.target.result;
-    displayContents(contents);
+    var text = e.target.result;
+    updateEditor(text);
+    updatePreview();
+    updateBuffer();
+    isSafeToUpdateBuffer = true;
   };
   reader.readAsText(file);
 }
 
 function loadFromBuffer() {
-  text = localStorage.getItem("buffer");
-  displayContents(text);
-}
-
-function displayContents(contents) {
-  env.editor.setValue(contents);
-  updateSaveBuffer();
-}
-
-function updateSaveBuffer() {
-  var text = editor.getValue();
-  var html = md.render(text);
-  document.getElementById("preview").innerHTML = html;
-
-
-  localStorage.setItem("buffer", text);
-
-  // Download
-  var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-  var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-  var link=window.URL.createObjectURL(blob);
-  var a = document.getElementById("save-link");
-  a.href = link;
-
-  files = document.getElementById("file-input").files
-  if (files.length > 0) {
-    var filename = files[0].name;
-    a.download = filename;
-  }
+  var text = localStorage.getItem("buffer");
+  updateEditor(text);
+  updatePreview();
+  updateBuffer();
+  isSafeToUpdateBuffer = true;
 }
 
 document.getElementById('file-input')
-  .addEventListener('change', readSingleFile, false);
+  .addEventListener('change', readFromFile, false);
 
 document.getElementById("load-buffer")
   .addEventListener('click', loadFromBuffer, false);
 
 document.getElementById("editor-container")
-  .addEventListener("change", updateSaveBuffer);
-
+  .addEventListener("change", (function() {updateBuffer(); updatePreview();}));
