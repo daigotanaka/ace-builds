@@ -1,0 +1,8 @@
+#!/bin/bash 
+
+if [ "$#" -ne 3 ]; then                                                         
+    echo "usage: auto_mv <download_dir> <destination_dir> <file_extention>"
+    exit -1                                                                     
+fi 
+# DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+fswatch $1 | while read f ; do i=`echo $f | cut -d '.' -f2`; if [[ -f $f ]] && [[ $i = $3 ]]; then mv $f $2; echo Moved $f to $2;fi; done
