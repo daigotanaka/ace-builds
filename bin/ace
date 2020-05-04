@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ "$#" -ne 3 ]; then                                                         
+    echo "usage: ace <download_dir> <destination_dir> <file_extention>"
+    exit -1                                                                     
+fi 
+
+ACE_KS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/.."
+# ABSPATH=$(cd "$(dirname "$0")"; pwd)
+
+cd $ACE_KS_DIR
+
+if [ -L './html_root' ];
+    then rm html_root;
+fi
+
+if [ -d $2 ];
+    then ln -s $2 html_root;
+    else echo "Directory $2 does not exist";
+    exit 1;
+fi
+
+echo Point your browswer to http://localhost:4000
+echo 
+
+bin/auto_mv $1 $2 $3 & python -m SimpleHTTPServer 4000
