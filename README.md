@@ -24,6 +24,25 @@ On the browser,
 2. Choose Markdown mode to use the Markdown preview window on the right.
 3. With Vim keybinding, ":w" to update the markdown preview. This also updates the localstorage buffer.
 4. When you accidentally close the browser, don't panic. Just click on "Read from buffer" button on the top-left for the recovery.
+5. Click on "Export" link under "Choose File" button to download the current snapshot.
+
+## Do more with bin/ace script
+
+At the root of this repository,
+
+```
+bin/ace <browswer's default download directory> <destination> <file extention>
+```
+
+For example,
+
+```
+bin/ace ~/Download ~/my_blog/ md
+```
+
+In the above case, the process monitors Download folder for .md (markdown) files. (left-)Clicking on Export link will cause the browser to download the current editor buffer. If the file is `<some name>.md`, the process automatically moves the file to `~/my_blog` directory. (tested on OS X)
+
+The folder `~/my_blog` is also considered as the HTML root. When `bin/ace` starts, it will create a symlink of the HTML root directory with the name `html_root` at the root of the repository folder. The HTML preview in the editor automatically add `html_root/` to the internal hyperlink and the image tags so the images and the links appear correctly in the preview window.
 
 ## Important notes and limitations:
 
