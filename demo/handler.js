@@ -5,7 +5,7 @@ isSafeToUpdateBuffer = false;
 function updatePreview() {
   var md = window.markdownit();
   var text = env.editor.getValue();
-  text = text.replace('](/', '](/html_root/')
+  text = text.replace(/\]\(\//g, '](/html_root/');
   var html = md.render(text);
   document.getElementById("preview").innerHTML = html;
 }
